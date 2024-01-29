@@ -75,15 +75,16 @@ app.post('/login', async (req, res) => {
             // return res.status(401).send('Invalid username or password');
             res.redirect('/logerror');
         }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) {
-            // return res.status(401).send('Invalid username or password');
-            res.redirect('/logerror');
-        }
-        else {
-            req.session.user = user;
-            res.redirect('/success');
+        if (user) {
+            const passwordMatch = await bcrypt.compare(password, user.password);
+            if (!passwordMatch) {
+                // return res.status(401).send('Invalid username or password');
+                res.redirect('/logerror');
+            }
+            else {
+                req.session.user = user;
+                res.redirect('/success');
+            }
         }
     } catch (error) {
         console.error(error);
