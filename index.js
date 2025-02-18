@@ -72,17 +72,20 @@ app.post('/login', async (req, res) => {
     try {
         const user = await Registration.findOne({ username });
         if (!user) {
-            // return res.status(401).send('Invalid username or password');
-            res.redirect('/logerror');
+            return res.status(401).send('Invalid username or password');
+            res.send('<script>alert("Invalid username or password"); window.location="/error";</script>');
+            // res.redirect('/logerror');
         }
         if (user) {
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (!passwordMatch) {
-                // return res.status(401).send('Invalid username or password');
-                res.redirect('/logerror');
+                return res.status(401).send('Invalid username or password');
+                 res.send('<script>alert("Invalid username or password"); window.location="/error";</script>');
+                // res.redirect('/logerror');
             }
             else {
                 req.session.user = user;
+                res.send('<script>alert("Login Successful"); window.location="/error";</script>');
                 res.redirect('/success');
             }
         }
