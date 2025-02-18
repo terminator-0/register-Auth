@@ -85,8 +85,8 @@ app.post('/login', async (req, res) => {
             }
             else {
                 req.session.user = user;
-                res.send('<script>alert("Login Successful"); window.location="/error";</script>');
-                res.redirect('/success');
+                res.send('<script>alert("Login Successful"); window.location="/success";</script>');
+                // res.redirect('/success');
             }
         }
     } catch (error) {
